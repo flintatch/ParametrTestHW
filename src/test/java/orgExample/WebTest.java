@@ -2,10 +2,7 @@ package orgExample;
 
 import com.codeborne.selenide.CollectionCondition;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 import orgExample.Data.Locale;
 
 import java.util.List;
@@ -59,4 +56,11 @@ public class WebTest {
                 .shouldHave(CollectionCondition.texts(buttonsTexts));
     }
 
+    @EnumSource(Locale.class)
+    @ParameterizedTest()
+    void checkLocaleTest(Locale locale) {
+        open("https://selenide.org/");
+        $$("#languages a").find(text(locale.name())).shouldBe(visible);
+
+    }
 }
